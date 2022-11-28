@@ -81,7 +81,10 @@ class Snake extends Spirit {
     clearInterval(loop);
     alert("Game Over");
     appendScore(points, "user");
+    updateScoreBoard();
     points = 0;
+    dirx = 0;
+    diry = 0;
     score.innerHTML = points;
     this.tail = [
       {
@@ -208,24 +211,26 @@ const setTable = () => {
 const appendScore = (score, user) => {
   scoreTable.sort((a, b) => b - a);
   if (scoreTable.length > 4) {
-    for (let i = 0; i < scoreTable.length; i++) {
-      if (score > scoreTable[i]) {
-        scoreTable[i] = score;
-        break;
-      }
+    if (score > scoreTable[scoreTable.length - 1]) {
+      scoreTable[scoreTable.length - 1] = score;
     }
   } else {
     scoreTable.push(score);
   }
   setTable();
-  console.log(scoreTable);
-  console.log(scoreTable.length);
+};
+
+const updateScoreBoard = () => {
+  for (i in scoreTable) {
+    scoreFields[i].innerHTML = scoreTable[i];
+  }
 };
 
 const field = document.querySelector("canvas");
 const score = document.querySelector("p");
 const context = field.getContext("2d");
 const difficulty = document.querySelector("#difficulty");
+const scoreFields = document.querySelectorAll(".score-value");
 
 let interval;
 let speed = 1;
@@ -253,4 +258,4 @@ const goldApple = new GoldApple(
 );
 
 changeDifficulty();
-console.log(scoreTable);
+updateScoreBoard();
