@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="style.css" />
     <title>Snake</title>
   </head>
-  <body>
-    Score:
-    <p>0</p>
-    <canvas width="420px" height="420px"></canvas>
-    <button type="submit" class="start">start</button>
+    <div class="options">
+      <select name="difficulty" id="difficulty" value="normal">
+        <option value="2">easy</option>
+        <option value="1">normal</option>
+        <option value="0.5">hard</option>
+      </select>
+    </div>
+    <div class = 'game'>
+      Score:
+      <p>0</p>
+      <canvas width="420px" height="420px"></canvas>
+      <button type="submit" class="start">start</button>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
