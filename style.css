@@ -27,8 +27,12 @@ canvas {
 #difficulty {
   border: none;
   background-color: #aaa;
-  padding: 5px;
+  padding: 1rem;
   border-radius: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 2px 2px 10px 1px #444;
 }
 
 .options {
@@ -43,24 +47,32 @@ canvas {
   background: var(--sec);
   border: 0;
   padding: 1rem;
-  font-size: 1.5rem;
-  font-weight: bold;
   border-radius: 20px;
   box-shadow: 2px 2px 10px 1px #444;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .info {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   width: 100vw;
   margin-bottom: 5rem;
 }
 
 .scoreBoard {
-  width: 50%;
-  text-align: center;
+  width: fit-content;
+}
+
+.scoreBoard > tr {
+  width: 1rem;
+}
+
+tr > td {
+  width: fit-content;
+  /* border: #aaa 2px solid; */
 }
 
 .game {
