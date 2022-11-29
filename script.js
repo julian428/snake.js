@@ -79,9 +79,7 @@ class Snake extends Spirit {
 
   die() {
     clearInterval(loop);
-    alert("Game Over");
-    appendScore(points, "user");
-    updateScoreBoard();
+    appendScore(points);
     points = 0;
     dirx = 0;
     diry = 0;
@@ -92,6 +90,9 @@ class Snake extends Spirit {
         y: this.cords[1],
       },
     ];
+    alert("Game Over");
+    sortBoard();
+    updateScoreBoard();
   }
 }
 
@@ -131,6 +132,7 @@ class GoldApple extends Apple {
   }
 }
 
+//helpers
 const changeDirection = (event) => {
   const mov = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
   if (
@@ -194,34 +196,59 @@ const loop = () => {
 };
 
 const getTable = () => {
-  const array = [];
-  for (let i = 1; i < 6; i++) {
-    if (localStorage.getItem("scoretable" + i) == null) continue;
-    array.push(parseInt(localStorage.getItem("scoretable" + i)));
-  }
-  return array;
+  let array = localStorage.getItem("scoretable");
+  if (array == null || array == undefined) return new Array();
+  let i = 0;
+  let temp;
+  let a = [];
+  array.split(",").map((element) => {
+    i++;
+    if (i % 2) {
+      temp = [];
+      temp.push(parseInt(element));
+    } else {
+      temp.push(element);
+      a.push(temp);
+    }
+  });
+  return a;
 };
 
 const setTable = () => {
-  for (let i = 0; i < scoreTable.length; i++) {
-    localStorage.setItem("scoretable" + (i + 1), scoreTable[i]);
-  }
+  localStorage.setItem("scoretable", scoreTable);
 };
 
-const appendScore = (score, user) => {
-  scoreTable.sort((a, b) => b - a);
+const appendScore = (score, user = prompt("Podaj imie")) => {
+  sortBoard();
+
   if (scoreTable.length > 4) {
-    if (score > scoreTable[scoreTable.length - 1]) {
-      scoreTable[scoreTable.length - 1] = score;
+    if (score > scoreTable[scoreTable.length - 1][0]) {
+      scoreTable[scoreTable.length - 1] = [score, user];
     }
   } else {
-    scoreTable.push(score);
+    scoreTable.push([score, user]);
   }
+  sortBoard();
   setTable();
 };
 
+const sortBoard = () => {
+  for (let i = 0; i < scoreTable.length; i++) {
+    for (let j = 0; j < scoreTable.length - i - 1; j++) {
+      if (scoreTable[i][0] > scoreTable[j][0]) {
+        const temp = scoreTable[i][0];
+        const temp2 = scoreTable[i][1];
+        scoreTable[i][0] = scoreTable[j][0];
+        scoreTable[i][1] = scoreTable[j][1];
+        scoreTable[j][0] = temp;
+        scoreTable[j][1] = temp2;
+      }
+    }
+  }
+};
+
 const updateScoreBoard = () => {
-  for (i in scoreTable) {
+  for (let i = 0; i < 5; i++) {
     scoreFields[i].innerHTML = scoreTable[i];
   }
 };
@@ -258,4 +285,8 @@ const goldApple = new GoldApple(
 );
 
 changeDifficulty();
+sortBoard();
 updateScoreBoard();
+
+console.log(scoreTable);
+console.log(scoreTable.length);
