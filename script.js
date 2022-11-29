@@ -251,6 +251,7 @@ const updateScoreBoard = () => {
 
 const field = document.querySelector("canvas");
 const score = document.querySelector("p");
+const start = document.querySelector(".start");
 const context = field.getContext("2d");
 const difficulty = document.querySelector("#difficulty");
 const scoreFields = document.querySelectorAll(".score-value");
@@ -267,6 +268,7 @@ let scoreTable = getTable();
 
 document.addEventListener("keyup", changeDirection);
 difficulty.addEventListener("change", changeDifficulty);
+start.addEventListener("click", changeDifficulty);
 
 const snake = new Snake(field, 20, 20, "green", 200, 200);
 const apple = new Apple(field, score, 20, 20, "red", 400, 400);
@@ -280,6 +282,5 @@ const goldApple = new GoldApple(
   Math.floor(Math.random() * 20) * 20
 );
 
-changeDifficulty();
 sortBoard();
 updateScoreBoard();
